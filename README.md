@@ -6,7 +6,7 @@
 
 
 ## CDC Dataset
-Will upload soon...
+[Click here to download...](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset)
 
 ## Code
 Will upload soon...

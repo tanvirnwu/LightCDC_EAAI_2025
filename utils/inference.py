@@ -1,7 +1,7 @@
 from PIL import Image
 import matplotlib.pyplot as plt
 import seaborn as sns
-from config.configs import *
+from config import configs
 import utils
 import numpy as np
 import pandas as pd
@@ -10,48 +10,8 @@ import os, random
 from sklearn.metrics import (accuracy_score, precision_recall_fscore_support, matthews_corrcoef, cohen_kappa_score,
                              confusion_matrix, average_precision_score, precision_recall_curve)
 from sklearn.preprocessing import label_binarize
+from model import lightCDC
 
-
-def single_random_inference(model, model_name, hazy_type):
-    # Data preparation now also returns class_to_idx mapping
-    test_loader, class_to_idx = utils.test_loader_function()
-    model_path = os.path.join(r'F:\Research\CDC5k\Storage\Saved_Models\\', f'{model_name}.pth')
-    model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)
-
-    # Switch model to evaluation mode
-    model.eval()
-
-    # Filter test_loader to only include data of the specified hazy_type
-    filtered_test_samples = [(image, label) for image, label in test_loader.dataset if class_to_idx[hazy_type] == label]
-
-    if not filtered_test_samples:
-        raise ValueError(f"No images found for class '{hazy_type}'")
-
-    # Randomly select one image and label of the specified hazy_type
-    image, true_label = random.choice(filtered_test_samples)
-
-    # Display the image
-    utils.display_image(image)  # Ensure you have a function to display the image.
-
-    # Move the image to the device and add a batch dimension
-    image = image.to(device).unsqueeze(0)
-
-    # Perform inference
-    with torch.no_grad():
-        output = model(image)
-        probabilities = torch.nn.functional.softmax(output, dim=1)
-        predicted_prob, predicted_label = torch.max(probabilities, 1)
-
-    # Convert to actual class names
-    idx_to_class = {v: k for k, v in class_to_idx.items()}
-    actual_class_name = idx_to_class[true_label]
-    predicted_class_name = idx_to_class[predicted_label.item()]
-
-    # Print the actual and predicted class along with the prediction probability
-    print(f'Actual class: {actual_class_name}')
-    print(f'Predicted class: {predicted_class_name}')
-    print(f'Prediction probability: {predicted_prob.item():.4f}')
 
 
 def get_class_name_from_index(index, test_path):
@@ -61,11 +21,10 @@ def get_class_name_from_index(index, test_path):
     return classes[index]
 
 
-def single_image_inference(model, model_name, image_path, test_path = test_path, transform = val_test_transform, device = device):
+def single_image_inference(model, model_weight, image_path, test_path = configs.test_path, transform = configs.val_test_transform, device = configs.device):
     # Load the model
-    model_path = os.path.join(r'D:\Research\CDC5k\Storage\Saved_Models', f'{model_name}.pth')
-    # model_path = r"D:\Research\CDC5k\Storage\Saved_Models\ShuffleNetV2_Custom_CDC_ES10_ADAM_50_64_le-3.pth"
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    model_weight = model_weight
+    model.load_state_dict(torch.load(model_weight, map_location=configs.device))
     model.to(device)
     model.eval()
 
@@ -97,9 +56,6 @@ def single_image_inference(model, model_name, image_path, test_path = test_path,
     return actual_class_name, predicted_class_name, predicted_probability.item()
 
 
-
-
-# Set random seeds and deterministic behavior for consistency
 SEED = 42
 torch.manual_seed(SEED)
 np.random.seed(SEED)
@@ -110,17 +66,9 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
-def multiple_inference(model = None, model_name = None, evl_csv_file_name = None, batch_size = None, lr = None):
+def multiple_inference(model_name = None, model_weight = None, evl_csv_file_name = None, batch_size = None, lr = None):
     test_loader, class_to_idx = utils.test_loader_function(batch_size= batch_size)
     learning_rate = lr
-
-    # =========Load the model========
-    if model != None:
-        model_path = os.path.join(r'F:\Research\CDC5k\Storage\Saved_Models', f'{model_name}.pth')
-        # print(model_path)
-        model.load_state_dict(torch.load(model_path, map_location=device))
-        model.to(device)
-        model.eval()
 
     all_preds = []
     all_labels = []
@@ -129,40 +77,13 @@ def multiple_inference(model = None, model_name = None, evl_csv_file_name = None
 
     with torch.no_grad():
         for data, target in test_loader:
-            data, target = data.to(device), target.to(device)
+            data, target = data.to(configs.device), target.to(configs.device)
 
-            if model_name == 'Bagging1':
-                outputs = model.Bagging1(data)
-            elif model_name == 'Bagging2':
-                outputs = model.Bagging2(data)
-            elif model_name == 'Bagging3':
-                # print('Inside Inference: Bagging3')
-                outputs = model.Bagging3(data)
-            elif model_name == 'Bagging4':
-                outputs = model.Bagging4(data)
-            elif model_name == 'Stacking1':
-                outputs = model.Stacking1(data)
-            elif model_name == 'Stacking2':
-                outputs = model.Stacking2(data)
-            elif model_name == 'Stacking3':
-                outputs = model.Stacking3(data)
-            elif model_name == 'Stacking4':
-                outputs = model.Stacking4(data)
-            elif model_name == 'Stacking5':
-                outputs = model.Stacking5(data)
-
-            elif model_name == 'Voting1':
-                outputs = model.Voting1(data)
-            elif model_name == 'Voting2':
-                outputs = model.Voting2(data)
-            elif model_name == 'Voting3':
-                outputs = model.Voting3(data)
-            elif model_name == 'Voting4':
-                outputs = model.Voting4(data)
-            elif model_name == 'Voting5':
-                outputs = model.Voting5(data)
-            else:
-                outputs = model(data)
+            model = lightCDC()
+            model.load_state_dict(torch.load(model_weight, map_location=configs.device))
+            model.to(configs.device)
+            model.eval()
+            outputs = model(data)
 
             # outputs = model(data)
             _, predicted = torch.max(outputs.data, 1)
@@ -182,29 +103,28 @@ def multiple_inference(model = None, model_name = None, evl_csv_file_name = None
     top1_accuracy = accuracy_score(all_labels, all_preds)
     top2_accuracy = correct_top2_count / n_samples
 
-    n_classes = Utils.output_shape
+    n_classes = configs.output_shape
     all_labels_binarized = label_binarize(all_labels, classes=range(n_classes))
 
     precision, recall, f1_score, _ = precision_recall_fscore_support(all_labels, all_preds, average='weighted')
     mcc = matthews_corrcoef(all_labels, all_preds)
     kappa = cohen_kappa_score(all_labels, all_preds)
-    # print(all_labels_binarized.shape)  # Should match the number of samples and the number of classes
-    # print(all_probs.shape)
+
     positive_class_probs = all_probs[:, 1]
     pr_auc = average_precision_score(all_labels_binarized, positive_class_probs, average="micro")
 
-    print('Evaluation on CIFAKE Testset:')
+    print('Evaluation on CDC Testset:')
     print(f'Model: {model_name} | Top-1 Acc: {round(top1_accuracy*100,2)} | Precision: {round(precision*100,2)} | Recall: {round(recall*100,2)} | F1-score: {round(f1_score*100,2)}')
 
-    metrics_path = os.path.join(evaluation_metrics_testset, f'{model_name}_CIFAKE_Testset.txt')
-    auc_pr_save = auc_pr_save_testset
-    confusion_matrix_save_path = os.path.join(confusion_matrix_save_testset, f'{model_name}_CIFAKE_Testset.jpg')
+    metrics_path = os.path.join(configs.evaluation_metrics_testset, f'{model_name}_CDC_Testset.txt')
+    auc_pr_save = configs.auc_pr_save_testset
+    confusion_matrix_save_path = os.path.join(configs.confusion_matrix_save_testset, f'{model_name}_CDC_Testset.jpg')
 
     # Ensure the directory exists, create it if it does not
-    os.makedirs(evaluation_metrics_csv_dir, exist_ok=True)
+    os.makedirs(configs.evaluation_metrics_csv_dir, exist_ok=True)
 
     # Define the full path to the CSV file
-    csv_file_path = os.path.join(evaluation_metrics_csv_dir, f'{evl_csv_file_name}.csv')
+    csv_file_path = os.path.join(configs.evaluation_metrics_csv_dir, f'{evl_csv_file_name}.csv')
 
     # Check if the CSV file already exists
     file_exists = os.path.isfile(csv_file_path)
@@ -215,10 +135,10 @@ def multiple_inference(model = None, model_name = None, evl_csv_file_name = None
 
     new_data_row = {
         'Model': model_name,
-        'Epochs': num_epochs,
+        'Epochs': configs.num_epochs,
         'BS': batch_size,
         'LR': learning_rate,
-        'Scheduler': scheduler_activate,
+        'Scheduler': configs.scheduler_activate,
         'Acc': round(top1_accuracy*100, 2),
         'Precision': round(precision*100, 2),
         'Recall': round(recall*100, 2),

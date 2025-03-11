@@ -1,16 +1,12 @@
-from Proposed_Models import *
+from model import lightCDC
 from torchinfo import summary
-import Engines
-from Pretrained_Models import *
-import Utils
+import engines
+import utils
 
 
-# # # ====== MODEL TESTING ======
-# Utils.multiple_inference(model = AlexNet(), model_name = model_name)
-# Utils.single_random_inference(model = ConvNextLarge(), model_name = model_name, hazy_type= 'EH')
 
 img = r"D:\Research\CDC5k\Data\adverseweather\ND\Fog\Hard\dense\NC2.jpg"
-Utils.single_image_inference(model=ShuffleNetV2_Custom(), model_name="ShuffleNetV2_Custom_CDC_ES10_ADAM_50_64_le-3", image_path = img)
+utils.single_image_inference(model=lightCDC(), model_name="ShuffleNetV2_Custom_CDC_ES10_ADAM_50_64_le-3", image_path = img)
 
 
 

@@ -9,7 +9,7 @@
 [Click here to download...](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset)
 
 ## Code
-Will upload soon...
+We are prearing the code...please stay in touched
 
 
 ## Cite this paper

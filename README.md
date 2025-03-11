@@ -13,7 +13,8 @@ Will upload soon...
 
 
 ## Cite this paper
-``@article{islam2025resource,
+```bibtex
+@article{islam2025resource,
   title={Resource constraint crop damage classification using depth channel shuffling},
   author={Islam, Md Tanvir and Swapnil, Safkat Shahrier and Billal, Md Masum and Karim, Asif and Shafiabady, Niusha and Hassan, Md Mehedi},
   journal={Engineering Applications of Artificial Intelligence},
@@ -22,4 +23,4 @@ Will upload soon...
   year={2025},
   publisher={Elsevier}
 }
-``
+

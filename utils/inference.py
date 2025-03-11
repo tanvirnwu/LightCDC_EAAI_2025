@@ -21,11 +21,11 @@ def get_class_name_from_index(index, test_path):
     return classes[index]
 
 
-def single_image_inference(model, model_weight, image_path, test_path = configs.test_path, transform = configs.val_test_transform, device = configs.device):
-    # Load the model
-    model_weight = model_weight
+def single_image_inference(model_weight, image_path, test_path = configs.test_path, transform = configs.val_test_transform, device = configs.device):
+
+    model = lightCDC()
     model.load_state_dict(torch.load(model_weight, map_location=configs.device))
-    model.to(device)
+    model.to(configs.device)
     model.eval()
 
     # Load and transform the image
@@ -66,7 +66,7 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
-def multiple_inference(model_name = None, model_weight = None, evl_csv_file_name = None, batch_size = None, lr = None):
+def multiple_inference(model_name = "lightCDC", model_weight = None, evl_csv_file_name = None, batch_size = None, lr = None):
     test_loader, class_to_idx = utils.test_loader_function(batch_size= batch_size)
     learning_rate = lr
 
@@ -83,9 +83,8 @@ def multiple_inference(model_name = None, model_weight = None, evl_csv_file_name
             model.load_state_dict(torch.load(model_weight, map_location=configs.device))
             model.to(configs.device)
             model.eval()
-            outputs = model(data)
 
-            # outputs = model(data)
+            outputs = model(data)
             _, predicted = torch.max(outputs.data, 1)
             all_preds.extend(predicted.cpu().numpy())
             all_labels.extend(target.cpu().numpy())
@@ -184,8 +183,6 @@ def multiple_inference(model_name = None, model_weight = None, evl_csv_file_name
 
     # Generate confusion matrix
     conf_matrix = confusion_matrix(all_labels, all_preds)
-
-    # Assuming conf_matrix, n_classes, idx_to_class, and model_name are defined
     plt.figure(figsize=(12, 10))
     ax = sns.heatmap(conf_matrix, annot=True, fmt='g', cmap='Blues',
                      xticklabels=[idx_to_class[i] for i in range(n_classes)],
@@ -193,9 +190,8 @@ def multiple_inference(model_name = None, model_weight = None, evl_csv_file_name
     plt.xlabel('Predicted Labels')
     plt.ylabel('True Labels')
     plt.title(f'Confusion Matrix for {model_name}')
-    plt.xticks(rotation=45)  # Adjusted for better readability if labels overlap
-    plt.yticks(rotation=45)  # Adjusted for better readability if labels overlap
-    # Uncomment the next line to save the plot
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=45)
     plt.savefig(confusion_matrix_save_path)
     # plt.show()
     plt.close()

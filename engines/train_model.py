@@ -32,8 +32,8 @@ def train_model(model_object: torch.nn.Module, model_name: str, batch_size: int,
     optimizer = torch.optim.Adam(params=model_object.parameters(), lr=learning_rate)
 
 
-    # L2 Norm Regularization
-    optimizer = torch.optim.Adam(params = model_object.parameters(), lr=learning_rate, weight_decay=l2_lambda)
+    # # L2 Norm Regularization
+    # optimizer = torch.optim.Adam(params = model_object.parameters(), lr=learning_rate, weight_decay=l2_lambda)
 
     # LEARNING RATE DECAY
     if configs.scheduler_activate:

@@ -12,8 +12,8 @@ img_size = 256
 
 # ========== MODEL PARAMETERS ==========
 num_epochs = 50
-# batch_size = 64
-# learning_rate = 0.1
+batch_size = 64
+learning_rate = 0.1
 scheduler_activate = False #SA means Scheduler Activate
 lr_decay_steps = 10
 gamma = 0.5

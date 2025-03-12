@@ -35,7 +35,7 @@ dataset/
 ## Model Weight
 Download Model Weight (will upload soon)
 
-![](./assets/LightCDC1.png)
+![](./assets/LightCDC1.jpg)
 
 
 ## Dependencies

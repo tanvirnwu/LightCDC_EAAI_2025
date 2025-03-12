@@ -10,6 +10,15 @@
 
 
 ### Dependencies
+#### Create conda environment
+```
+conda create --name lightCDC python=3.9
+```
+#### Install CUDA: Tested using CUDA 11.8
+```
+conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1  pytorch-cuda=11.8 -c pytorch -c nvidia
+```
+#### Install other libraries
 ```
 pip install -r requirements.txt
 ````

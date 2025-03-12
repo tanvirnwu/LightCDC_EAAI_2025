@@ -52,13 +52,5 @@ train_path = './data/train'
 test_path = './data/test'
 evl_csv_file_name = 'test_run.csv'
 config_file_path = './config/configs.py'
-# Path where you want to save the new text file
-# save_file_path = r'F:\Research\CDC5k\Storage\Save_Configs\\' + model_name + '_Configs.txt'
 
-# ========= STORAGE PATHS =========
-evaluation_metrics_csv_dir = './storage'
-auc_pr_save_testset = './storage/AUC_PR'
-evaluation_metrics_testset = './storage/Evaluation_Metrics'
-confusion_matrix_save_testset = './storage/Confusion_Matrix'
 Loss_Curves = './storage/Loss_Curves'
-# model_weights_saving_path = r'F:\Research\CDC5k\Storage\Saved_Models\\' + model_name + '.pth'

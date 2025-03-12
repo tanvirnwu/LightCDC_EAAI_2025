@@ -25,7 +25,7 @@ For other paramaetrs you can edit the configs.py file of the config folder.
 
 #### Single Image Inference
 ```
-python inference.py --mode single --model_weight <model_weight_path> --image_path <your_image_path>
+python test.py --mode single --model_weight <model_weight_path> --image_path <your_image_path>
 ```
 
 #### Multiple Image Inference (Folder)

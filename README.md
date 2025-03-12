@@ -9,6 +9,7 @@
 [Download Dataset](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset) 
 
 #### Dataset Folder Sturcture
+```
 dataset/
 └── data/
     ├── train/
@@ -29,7 +30,7 @@ dataset/
             ├── image103.jpg
             ├── image104.jpg
             └── ...
-
+```
 
 Download Model Weight (will upload soon)
 

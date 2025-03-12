@@ -21,7 +21,7 @@ python train.py --config <name_of_your_config> --batch_size <batch_size> --lr <l
 ```
 For other paramaetrs you can edit the configs.py file of the config folder.
 
-### Testing?
+### Testing
 
 #### Single Image Inference
 ```

@@ -6,7 +6,8 @@
 
 
 ## CDC Dataset & Model Weight
-[Download Dataset (already available)](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset) | Download Model Weight (will upload soon)
+[Download Dataset](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset) 
+Download Model Weight (will upload soon)
 
 
 ## Dependencies

@@ -47,7 +47,8 @@ def data_preparation_function(batch_size, path = train_path, train_ratio= train_
     return train_loader, val_loader
 
 
-def test_loader_function(batch_size, test_path = test_path, transform = val_test_transform):
+
+def test_loader_function(batch_size, test_path = None, transform = val_test_transform):
     # Create the ImageFolder dataset
     test_dataset = ImageFolder(root=test_path, transform=transform)
 
@@ -56,5 +57,6 @@ def test_loader_function(batch_size, test_path = test_path, transform = val_test
 
     # Extract the class_to_idx mapping from the dataset
     class_to_idx = test_dataset.class_to_idx
+    # print(f"Found {len(test_dataset)} test images across {len(class_to_idx)} classes.")
 
     return test_loader, class_to_idx

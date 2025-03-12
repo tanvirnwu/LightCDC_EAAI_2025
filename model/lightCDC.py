@@ -3,7 +3,7 @@ from torchvision.models.shufflenetv2 import ShuffleNet_V2_X0_5_Weights
 import torch.nn as nn
 from config import configs
 
-def lightCDC(num_classes=2, device='cuda'):
+def LightCDC(num_classes=2, device='cuda'):
 
     # Loading ShuffleNetV2 Model's Pretrained Weights
     shuffleNetV2 = shufflenet_v2_x0_5(weights=ShuffleNet_V2_X0_5_Weights.IMAGENET1K_V1)

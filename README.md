@@ -39,6 +39,8 @@ Download Model Weight (will upload soon)
 #### Create conda environment
 ```
 conda create --name lightCDC python=3.9
+
+conda activate lightCDC
 ```
 #### Install CUDA: Tested using CUDA 11.8
 ```

@@ -33,7 +33,7 @@ python inference.py --mode single --model_weight <model_weight_path> --image_pat
 python inference.py --mode multiple --model_weight <model_weight_path>
 ```
 
-![Visitor Count](https://komarev.com/ghpvc/?username=tanvirnwu&repo=LightCDC_EAAI_2025&style=for-the-badge&label=Project%20Views)
+![Visitor Count](https://komarev.com/ghpvc/?username=tanvirnwu&repo=LightCDC_EAAI_2025)
 
 ## Cite this Paper
 

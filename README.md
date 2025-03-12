@@ -8,11 +8,36 @@
 ## CDC Dataset
 [Click here to download...](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset)
 
-## Code
-We are prearing the code...please stay in touched
 
+### Dependencies
+```
+pip install -r requirements.txt
+````
 
-## Cite this paper
+### Training
+
+```
+python train.py --config <name_of_your_config> --batch_size <batch_size> --lr <learning_rate>
+```
+For other paramaetrs you can edit the configs.py file of the config folder.
+
+### Testing
+
+#### Single Image Inference
+```
+python test.py --mode single --model_weight <model_weight_path> --image_path <your_image_path>
+```
+
+#### Multiple Image Inference (Folder)
+```
+python inference.py --mode multiple --model_weight <model_weight_path>
+```
+
+![Visitor Count](https://komarev.com/ghpvc/?username=tanvirnwu&repo=LightCDC_EAAI_2025)
+
+## Cite this Paper
+
+If you find our work useful in your research, please consider citing our paper and star ✨✨ this repository. Thank you!
 ```bibtex
 @article{islam2025resource,
   title={Resource constraint crop damage classification using depth channel shuffling},

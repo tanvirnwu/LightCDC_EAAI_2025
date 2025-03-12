@@ -32,7 +32,10 @@ dataset/
             └── ...
 ```
 
+## Model Weight
 Download Model Weight (will upload soon)
+
+![](./assets/LightCDC1.png)
 
 
 ## Dependencies

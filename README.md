@@ -5,8 +5,31 @@
 <hr>
 
 
-## CDC Dataset & Model Weight
+## CDC Dataset
 [Download Dataset](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset) 
+
+#### Dataset Folder Sturcture
+dataset/
+└── data/
+    ├── train/
+    │   ├── damaged/
+    │   │   ├── image1.jpg
+    │   │   ├── image2.jpg
+    │   │   └── ...
+    │   └── non_damaged/
+    │       ├── image3.jpg
+    │       ├── image4.jpg
+    │       └── ...
+    └── test/
+        ├── damaged/
+        │   ├── image101.jpg
+        │   ├── image102.jpg
+        │   └── ...
+        └── non_damaged/
+            ├── image103.jpg
+            ├── image104.jpg
+            └── ...
+
 
 Download Model Weight (will upload soon)
 

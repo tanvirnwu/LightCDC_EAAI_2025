@@ -8,6 +8,8 @@
 ## CDC Dataset
 [Download Dataset](https://www.kaggle.com/datasets/tanvirnwu/crop-damage-classification-dataset-cdc-dataset) 
 
+![](./assets/All Visualizations 2-11.jpg)
+
 #### Dataset Folder Sturcture
 ```
 dataset/

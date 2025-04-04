@@ -10,11 +10,11 @@ def LightCDC(num_classes=2, device='cuda'):
 
     # Freezing Layers of ShuffleNetV2 Model
     for param in shuffleNetV2.parameters():
-        param.requires_grad = True
+        param.requires_grad = False
 
     # Unfreeze the last classifier layer
     for param in shuffleNetV2.fc.parameters():
-        param.requires_grad = True
+        param.requires_grad = False
 
     # Modifying ShuffleNetV2 Model's Classifier Layer
     in_features = shuffleNetV2.fc.in_features
